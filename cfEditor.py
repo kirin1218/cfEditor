@@ -4,7 +4,11 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
 
+import cf
+
 if __name__ == '__main__':
+    cfile = cf.command_file("./commnad.csv")
+
     app = QApplication(sys.argv)
 
     w = QWidget()
