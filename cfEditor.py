@@ -20,8 +20,9 @@ if __name__ == '__main__':
     w.resize(500,500)
     w.setWindowTitle("Command File Editor")
 
-    table = QTableWidget(w)
-    table.resize(300,300)
+    table = QTableWidget()
+    table.resize(w.size().width(),w.size().height())
+    table.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
     #tableItem = QTableWidgetItem()
 
     table.setRowCount(csvfile.CountCol())
@@ -36,6 +37,10 @@ if __name__ == '__main__':
         for j in range(0,len(csvfile.data[i])):
             table.setItem(i,j, QTableWidgetItem(csvfile.data[i][j]))
     
+    layout = QHBoxLayout()
+    layout.addWidget(table)
+    w.setLayout(layout)
+
     w.show()
 
     sys.exit(app.exec_())
