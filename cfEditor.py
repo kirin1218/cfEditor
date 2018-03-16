@@ -4,30 +4,37 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
 
-import cf
+#import cf
+import csvParse
 
 if __name__ == '__main__':
-    cfile = cf.command_file("./commnad.csv")
+    #cfile = cf.command_file("./commnad.csv")
+    csvfile = csvParse.csvParse("./command.csv")
+
+    print("Col="+str(csvfile.CountCol()))
+    print("Row="+str(csvfile.CountRow()))
 
     app = QApplication(sys.argv)
 
     w = QWidget()
-    w.resize(250,250)
+    w.resize(500,500)
     w.setWindowTitle("Command File Editor")
 
     table = QTableWidget(w)
+    table.resize(300,300)
     #tableItem = QTableWidgetItem()
 
-    table.setRowCount(2)
-    table.setColumnCount(2)
+    table.setRowCount(csvfile.CountCol())
+    table.setColumnCount(csvfile.CountRow())
 
-    horzHeaders = ["Name", "Age"]
+    horzHeaders = []
+    for i in range(1,csvfile.CountCol()+1):
+        horzHeaders.append("Col"+str(i))
     table.setHorizontalHeaderLabels( horzHeaders )
 
-    table.setItem(0,0, QTableWidgetItem("tom"))
-    table.setItem(0,1, QTableWidgetItem("15"))
-    table.setItem(1,0, QTableWidgetItem("Ken"))
-    table.setItem(1,1, QTableWidgetItem("44"))
+    for i in range(0,csvfile.CountRow()):
+        for j in range(0,len(csvfile.data[i])):
+            table.setItem(i,j, QTableWidgetItem(csvfile.data[i][j]))
     
     w.show()
 
